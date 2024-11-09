@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #00ff00;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ascii-art {
+            color: #00ff00;
+            white-space: pre;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .terminal {
+            background-color: #000000;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex-grow: 1;
+            background-color: #000000;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 10px;
+            font-family: monospace;
+        }
+
+        button {
+            background-color: #00ff00;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .user-message {
+            color: #ffffff;
+        }
+
+        .cat-message {
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="ascii-art">
+ /\___/\
+(  o o  )
+(  =^=  ) CAIT
+ (______)
+    </div>
+    <h1>CAT AI TERMINAL</h1>
+    
+    <div id="terminal" class="terminal"></div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const catResponses = [
+            "Meooow! *purrs happily*",
+            "Mrrrrp... *rubs against screen*",
+            "MEOW! *demands attention*",
+            "Prrrrrrr... *rolls over*",
+            "Miau miau! *plays with keyboard*",
+            "Meow meow meow! *chases cursor*",
+            "Nyan~ *sits on keyboard*",
+            "*whiskers twitching* Mrrreow?",
+            "Purrrrfect! *kneads screen*",
+            "*tail swishing* Meeeow!"
+        ];
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const terminal = document.getElementById('terminal');
+            
+            if (input.value.trim() !== '') {
+                // Add user message
+                const userDiv = document.createElement('div');
+                userDiv.className = 'message user-message';
+                userDiv.textContent = '> ' + input.value;
+                terminal.appendChild(userDiv);
+                
+                // Add cat response
+                setTimeout(() => {
+                    const catDiv = document.createElement('div');
+                    catDiv.className = 'message cat-message';
+                    const randomResponse = catResponses[Math.floor(Math.random() * catResponses.length)];
+                    catDiv.textContent = randomResponse;
+                    terminal.appendChild(catDiv);
+                    
+                    // Auto scroll to bottom
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, 500);
+                
+                input.value = '';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
